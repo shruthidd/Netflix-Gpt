@@ -1,31 +1,143 @@
-import React from 'react'
-import Header from './Header'
-import { useState } from 'react'
-
+import React, { useRef } from "react";
+import Header from "./Header";
+import { useState } from "react";
+import { checkValidate } from "../utils/Validate";
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { auth } from "../utils/Firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 const Login = () => {
-  
-  const[issigninform, setIsSigninform] = useState(true)
+  const [issigninform, setIsSigninform] = useState(true);
+  const [errormessage, setErrormessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const email = useRef(null);
+  const name = useRef(null);
+  const password = useRef(null);
 
-  const toggleButton = () =>{
-        setIsSigninform(!issigninform)
+
+  const handleClickButton = () => {
+    //validate the form data
+    //checkValidate()
+    //console.log(name);
+    //console.log(email);
+    //console.log(password.current.value);                     //name is only for sign up form
+    const message = checkValidate( email.current.value, password.current.value)
+   // console.log(message)
+   setErrormessage(message);
+   if (message) return null;
+        if(!issigninform) {
+          //sign up logic
+          createUserWithEmailAndPassword(auth,email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    updateProfile(user, {
+      displayName: name.current.value, photoURL: USER_AVATAR
+    }).then(() => {
+      // Profile updated!
+      const { uid, email, displayName, photoURL } = auth.currentUser;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+      
+    }).catch((error) => {
+      // An error occurred
+     setErrormessage(error.message)
+    });
+    
+   // console.log(user);
+   
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrormessage(errorCode + " - " + errorMessage)
+    // ..
+  });
+
+        }
+        else {
+         //sign in logic
+         signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    //console.log(user)
+   
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrormessage(errorCode + " - " + errorMessage)
+  });
+        }
+
+
+
+
   }
+
+  const toggleButton = () => {
+    setIsSigninform(!issigninform);
+  };
   return (
     <div>
-      <Header/>
-    <div className='absolute m-340  h-96 bg-gradient-to-r  from-black bg-opacity-25' >
-      
-      <img className=' md:drop-shadow-xl' src="https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg" alt = "backimg "/>
+      <Header />
+      <div className="absolute m-340  h-96 bg-gradient-to-r  from-black bg-opacity-25">
+        <img
+          className=" md:drop-shadow-xl"
+          src="https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+          alt="backimg "
+        />
+      </div>
+      <form onSubmit = { (e) => e.preventDefault()} className="w-4/12 absolute p-10 my-36 mx-auto right-0 left-0 text-white bg-black bg-opacity-70 rounded-lg">
+        <h1 className=" font-bold text-3xl py-4">
+          {issigninform ? "Sign In" : "Sign Up"}
+        </h1>
+        {!issigninform && (
+          <input
+          ref={name}
+            type="text"
+            placeholder="Name"
+            className="p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm"
+          />
+        )}
+        <input
+        ref={email}
+          type="text"
+          placeholder="Email address"
+          className="p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm"
+        />
+        <input
+        ref={password}
+          type="password"
+          placeholder="Password"
+          className="p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm"
+        />
+    <p className="text-red-600 font-bold py-2">{errormessage}</p>
+        <button type="submit" className=" p-4 my-4 bg-red-700 w-full" onClick={handleClickButton}>
+          {issigninform ? "Sign In" : "Sign Up"}
+        </button>
+        <p className=" cursor-pointer" onClick={toggleButton}>
+          {issigninform
+            ? "New to netflix? Sign Up"
+            : "already registered.. please sign in"}
+        </p>
+      </form>
     </div>
-    <form className='w-4/12 absolute p-10 my-36 mx-auto right-0 left-0 text-white bg-black bg-opacity-70 rounded-lg'>
-    <h1 class0 Name=' font-bold text-3xl py-4'>{issigninform ? "Sign In" : "Sign Up"}</h1>
-    {!issigninform &&<input type="text" placeholder='Name' className='p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm'  />}
-    <input type="text" placeholder='Email address' className='p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm'  />
-    <input type="password" placeholder='Password' className='p-4 my-4 w-full bg-gray-600 bg-opacity-60 rounded-sm' />
-    <button type = "submit" className=' p-4 my-4 bg-red-700 w-full'>{issigninform ? "Sign In" : "Sign Up"}</button>
-    <p className=' cursor-pointer'  onClick={toggleButton}>{issigninform ?  "New to netflix? Sign Up" : "already registered.. please sign in" }</p>
-    </form>
-    </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
