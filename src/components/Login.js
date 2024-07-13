@@ -7,7 +7,7 @@ import { auth } from "../utils/Firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { USER_AVATAR } from "../utils/constants";
+import { LOGIN_IMG_URL, USER_AVATAR } from "../utils/constants";
 const Login = () => {
   const [issigninform, setIsSigninform] = useState(true);
   const [errormessage, setErrormessage] = useState(null);
@@ -98,7 +98,7 @@ const Login = () => {
       <div className="absolute m-340  h-96 bg-gradient-to-r  from-black bg-opacity-25">
         <img
           className=" md:drop-shadow-xl"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+          src= {LOGIN_IMG_URL}
           alt="backimg "
         />
       </div>
