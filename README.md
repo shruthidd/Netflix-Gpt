@@ -28,5 +28,19 @@
 - update store wth trailer video data
 - embedded the youtube video and mak it autoplay and mute 
 -tailwind classes to make it main container look awesome
+-buiild secondary component
+- build movie list and movie cards
+- TMDB iMAGE CDN utl
+- made the browse page amazing wth tailwind css
+- usePopularMovies custom hooks
+- GPT search page
+ - multi language features
+ - GPT open Ai key
+ - Groqai api key
+ - added .env file
+ - made our site responsive
+
+
+
 
 

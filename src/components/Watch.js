@@ -58,16 +58,17 @@ const Watch = (movieId) => {
  
 
   return (
-    <>
-    <div className="absolute  px-8 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row  top-0 left-0  w-full  z-50 justify-between">
+    
+    <div className="bg-black  h-screen object-cover">
+    <div className="absolute   px-8 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row  top-0 left-0  w-full  z-50 justify-between">
       <a href="/" className=" text-white">
         {/* <img className="w-60 mx-auto m  md:mx-0 " src={Netflix_Logo_PM} alt="logo" /> */}
-        <img className="w-60 mx-auto m  md:mx-0" src = {LOGO}/>
+        <img className="  w-20  md:w-60 mx-auto   md:mx-0" src = {LOGO}/>
 
       </a>
       
         <Link  to = {`/Browse`}>   
-        <button className="text-red-900 bg-black text-lg font-bold my-2 mx-5 w-20 h-19">Back⬅️</button>
+        <button className="text-red-900 bg-black text-lg font-bold my-2 md:mx-5 w-20 h-19">Back⬅️</button>
         </Link>
        
       
@@ -87,10 +88,11 @@ const Watch = (movieId) => {
       </div>
       
 
-      <div className="  bg-black text-white bg-opacity-90">
+      <div className="  bg-black object-cover text-white bg-opacity-90">
       <MovieList title="Recommendations" movies={recommendations} />
       </div>
-    </>
+      </div>
+    
   );
 };
 

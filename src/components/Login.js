@@ -95,14 +95,14 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute m-340  h-96 bg-gradient-to-r  from-black bg-opacity-25">
+      <div className="absolute w-screen  bg-gradient-to-r  from-black bg-opacity-25">
         <img
-          className=" md:drop-shadow-xl"
+          className="  h-screen   md:h-full object-cover w-full "
           src= {LOGIN_IMG_URL}
           alt="backimg "
         />
       </div>
-      <form onSubmit = { (e) => e.preventDefault()} className="w-4/12 absolute p-10 my-36 mx-auto right-0 left-0 text-white bg-black bg-opacity-70 rounded-lg">
+      <form onSubmit = { (e) => e.preventDefault()} className=" w-full md:w-4/12 absolute p-10 my-36 mx-auto right-0 left-0 text-white bg-black bg-opacity-70 rounded-lg">
         <h1 className=" font-bold text-3xl py-4">
           {issigninform ? "Sign In" : "Sign Up"}
         </h1>
