@@ -10,11 +10,11 @@ if(!movies) return;   // OR if(movies === null) or if(movies === 0)   bcz in red
 const mainMovies = movies[0];
 //console.log(mainMovies)
 
-const {original_title, overview,id} = mainMovies;
+const {original_title, overview, id} = mainMovies;
   return (
     <div>
-      <VideoTitle title = {original_title} overview = {overview}/>
-      <VideoBackground movieID = {id}/>
+      <VideoTitle title = {original_title} overview = {overview}  id = {id} />
+      <VideoBackground movieId = {id}/>
 
 
     </div>

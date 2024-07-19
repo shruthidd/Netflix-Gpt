@@ -6,10 +6,10 @@ export const API_OPTIONS= {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMzUxOTc5ODViNzdmZGE4MDFmMjZmZjdiYzBhNmFjYyIsIm5iZiI6MTcyMDUzMDUwNS4zMjA1Niwic3ViIjoiNjY4ZDM0N2M0NzA4Njc5Y2NmMzI5ZDMwIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.6oHrklFadq00iNkD8pbErPZp935WOpFxBOF_rixdXK0'
+      Authorization: "Bearer "+ process.env.REACT_APP_TMDBKEY
     }
   };
-
+//console.log(API_OPTIONS)
   export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
 
   export const LOGIN_IMG_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg";
@@ -32,8 +32,9 @@ export const API_OPTIONS= {
     name: "Spanish"
   }
 
-
-
-
-
 ]
+
+
+export  const GROQ_GPTKEY = process.env.REACT_APP_GROQ_GPTKEY
+
+//console.log(GROQ_GPTKEY);
